@@ -40,8 +40,8 @@
             this.Start = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.button3 = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupbox2.SuspendLayout();
@@ -122,8 +122,8 @@
             // 
             // groupbox2
             // 
+            this.groupbox2.Controls.Add(this.textBox1);
             this.groupbox2.Controls.Add(this.button3);
-            this.groupbox2.Controls.Add(this.richTextBox1);
             this.groupbox2.Controls.Add(this.button2);
             this.groupbox2.Controls.Add(this.button1);
             this.groupbox2.Controls.Add(this.Start);
@@ -142,6 +142,7 @@
             this.Start.TabIndex = 3;
             this.Start.Text = "开始运行";
             this.Start.UseVisualStyleBackColor = true;
+            this.Start.Click += new System.EventHandler(this.Start_Click);
             // 
             // button1
             // 
@@ -161,14 +162,7 @@
             this.button2.TabIndex = 1;
             this.button2.Text = "加载句柄";
             this.button2.UseVisualStyleBackColor = true;
-            // 
-            // richTextBox1
-            // 
-            this.richTextBox1.Location = new System.Drawing.Point(3, 25);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(535, 247);
-            this.richTextBox1.TabIndex = 3;
-            this.richTextBox1.Text = "";
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button3
             // 
@@ -178,6 +172,14 @@
             this.button3.TabIndex = 4;
             this.button3.Text = "停止运行";
             this.button3.UseVisualStyleBackColor = true;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(7, 24);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(542, 238);
+            this.textBox1.TabIndex = 5;
             // 
             // MainForm
             // 
@@ -189,10 +191,11 @@
             this.Font = new System.Drawing.Font("宋体", 9F);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Name = "MainForm";
-            this.Text = "中投证券自动下单";
+            this.Text = "自动下单";
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.groupbox2.ResumeLayout(false);
+            this.groupbox2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -212,7 +215,7 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }
 

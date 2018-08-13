@@ -29,41 +29,41 @@
         private void InitializeComponent()
         {
             this.A1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.A2 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.B1 = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.textBox5 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.C1 = new System.Windows.Forms.TextBox();
+            this.C2 = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.B2 = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
-            this.textBox6 = new System.Windows.Forms.TextBox();
-            this.textBox7 = new System.Windows.Forms.TextBox();
-            this.textBox9 = new System.Windows.Forms.TextBox();
+            this.A3 = new System.Windows.Forms.TextBox();
+            this.AA2 = new System.Windows.Forms.TextBox();
+            this.B3 = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
-            this.textBox11 = new System.Windows.Forms.TextBox();
+            this.AA3 = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
-            this.textBox8 = new System.Windows.Forms.TextBox();
+            this.C3 = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
-            this.textBox12 = new System.Windows.Forms.TextBox();
-            this.textBox13 = new System.Windows.Forms.TextBox();
+            this.A4 = new System.Windows.Forms.TextBox();
+            this.A5 = new System.Windows.Forms.TextBox();
             this.label16 = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
-            this.textBox10 = new System.Windows.Forms.TextBox();
+            this.AA5 = new System.Windows.Forms.TextBox();
             this.label21 = new System.Windows.Forms.Label();
-            this.textBox14 = new System.Windows.Forms.TextBox();
+            this.C4 = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.SuspendLayout();
@@ -77,13 +77,13 @@
             this.A1.Size = new System.Drawing.Size(50, 30);
             this.A1.TabIndex = 0;
             // 
-            // textBox2
+            // A2
             // 
-            this.textBox2.Location = new System.Drawing.Point(317, 9);
-            this.textBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(50, 30);
-            this.textBox2.TabIndex = 1;
+            this.A2.Location = new System.Drawing.Point(317, 9);
+            this.A2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.A2.Name = "A2";
+            this.A2.Size = new System.Drawing.Size(50, 30);
+            this.A2.TabIndex = 1;
             // 
             // label1
             // 
@@ -129,13 +129,13 @@
             this.label4.TabIndex = 7;
             this.label4.Text = "当天最高价回落>B1";
             // 
-            // textBox1
+            // B1
             // 
-            this.textBox1.Location = new System.Drawing.Point(574, 9);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(4);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(50, 30);
-            this.textBox1.TabIndex = 8;
+            this.B1.Location = new System.Drawing.Point(574, 9);
+            this.B1.Margin = new System.Windows.Forms.Padding(4);
+            this.B1.Name = "B1";
+            this.B1.Size = new System.Drawing.Size(50, 30);
+            this.B1.TabIndex = 8;
             // 
             // label5
             // 
@@ -146,21 +146,21 @@
             this.label5.TabIndex = 9;
             this.label5.Text = "卖出可用股份C1";
             // 
-            // textBox5
+            // C1
             // 
-            this.textBox5.Location = new System.Drawing.Point(787, 9);
-            this.textBox5.Margin = new System.Windows.Forms.Padding(4);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(50, 30);
-            this.textBox5.TabIndex = 10;
+            this.C1.Location = new System.Drawing.Point(787, 9);
+            this.C1.Margin = new System.Windows.Forms.Padding(4);
+            this.C1.Name = "C1";
+            this.C1.Size = new System.Drawing.Size(50, 30);
+            this.C1.TabIndex = 10;
             // 
-            // textBox3
+            // C2
             // 
-            this.textBox3.Location = new System.Drawing.Point(787, 55);
-            this.textBox3.Margin = new System.Windows.Forms.Padding(4);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(50, 30);
-            this.textBox3.TabIndex = 19;
+            this.C2.Location = new System.Drawing.Point(787, 55);
+            this.C2.Margin = new System.Windows.Forms.Padding(4);
+            this.C2.Name = "C2";
+            this.C2.Size = new System.Drawing.Size(50, 30);
+            this.C2.TabIndex = 19;
             // 
             // label6
             // 
@@ -171,13 +171,13 @@
             this.label6.TabIndex = 18;
             this.label6.Text = "卖出可用股份C2";
             // 
-            // textBox4
+            // B2
             // 
-            this.textBox4.Location = new System.Drawing.Point(574, 55);
-            this.textBox4.Margin = new System.Windows.Forms.Padding(4);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(50, 30);
-            this.textBox4.TabIndex = 17;
+            this.B2.Location = new System.Drawing.Point(574, 55);
+            this.B2.Margin = new System.Windows.Forms.Padding(4);
+            this.B2.Name = "B2";
+            this.B2.Size = new System.Drawing.Size(50, 30);
+            this.B2.TabIndex = 17;
             // 
             // label7
             // 
@@ -223,30 +223,30 @@
             this.label10.TabIndex = 13;
             this.label10.Text = "<当前盈亏比例<";
             // 
-            // textBox6
+            // A3
             // 
-            this.textBox6.Location = new System.Drawing.Point(317, 55);
-            this.textBox6.Margin = new System.Windows.Forms.Padding(4);
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(50, 30);
-            this.textBox6.TabIndex = 12;
+            this.A3.Location = new System.Drawing.Point(317, 55);
+            this.A3.Margin = new System.Windows.Forms.Padding(4);
+            this.A3.Name = "A3";
+            this.A3.Size = new System.Drawing.Size(50, 30);
+            this.A3.TabIndex = 12;
             // 
-            // textBox7
+            // AA2
             // 
-            this.textBox7.Font = new System.Drawing.Font("宋体", 12F);
-            this.textBox7.Location = new System.Drawing.Point(67, 55);
-            this.textBox7.Margin = new System.Windows.Forms.Padding(4);
-            this.textBox7.Name = "textBox7";
-            this.textBox7.Size = new System.Drawing.Size(50, 30);
-            this.textBox7.TabIndex = 11;
+            this.AA2.Font = new System.Drawing.Font("宋体", 12F);
+            this.AA2.Location = new System.Drawing.Point(67, 55);
+            this.AA2.Margin = new System.Windows.Forms.Padding(4);
+            this.AA2.Name = "AA2";
+            this.AA2.Size = new System.Drawing.Size(50, 30);
+            this.AA2.TabIndex = 11;
             // 
-            // textBox9
+            // B3
             // 
-            this.textBox9.Location = new System.Drawing.Point(574, 99);
-            this.textBox9.Margin = new System.Windows.Forms.Padding(4);
-            this.textBox9.Name = "textBox9";
-            this.textBox9.Size = new System.Drawing.Size(50, 30);
-            this.textBox9.TabIndex = 26;
+            this.B3.Location = new System.Drawing.Point(574, 99);
+            this.B3.Margin = new System.Windows.Forms.Padding(4);
+            this.B3.Name = "B3";
+            this.B3.Size = new System.Drawing.Size(50, 30);
+            this.B3.TabIndex = 26;
             // 
             // label12
             // 
@@ -281,14 +281,14 @@
             this.label15.TabIndex = 22;
             this.label15.Text = "<当前盈亏比例";
             // 
-            // textBox11
+            // AA3
             // 
-            this.textBox11.Font = new System.Drawing.Font("宋体", 12F);
-            this.textBox11.Location = new System.Drawing.Point(67, 99);
-            this.textBox11.Margin = new System.Windows.Forms.Padding(4);
-            this.textBox11.Name = "textBox11";
-            this.textBox11.Size = new System.Drawing.Size(50, 30);
-            this.textBox11.TabIndex = 20;
+            this.AA3.Font = new System.Drawing.Font("宋体", 12F);
+            this.AA3.Location = new System.Drawing.Point(67, 99);
+            this.AA3.Margin = new System.Windows.Forms.Padding(4);
+            this.AA3.Name = "AA3";
+            this.AA3.Size = new System.Drawing.Size(50, 30);
+            this.AA3.TabIndex = 20;
             // 
             // label11
             // 
@@ -299,13 +299,13 @@
             this.label11.TabIndex = 27;
             this.label11.Text = "卖出可用股份100%";
             // 
-            // textBox8
+            // C3
             // 
-            this.textBox8.Location = new System.Drawing.Point(574, 142);
-            this.textBox8.Margin = new System.Windows.Forms.Padding(4);
-            this.textBox8.Name = "textBox8";
-            this.textBox8.Size = new System.Drawing.Size(50, 30);
-            this.textBox8.TabIndex = 36;
+            this.C3.Location = new System.Drawing.Point(574, 142);
+            this.C3.Margin = new System.Windows.Forms.Padding(4);
+            this.C3.Name = "C3";
+            this.C3.Size = new System.Drawing.Size(50, 30);
+            this.C3.TabIndex = 36;
             // 
             // label13
             // 
@@ -349,22 +349,22 @@
             this.label19.TabIndex = 30;
             this.label19.Text = "<当前盈亏比例<";
             // 
-            // textBox12
+            // A4
             // 
-            this.textBox12.Location = new System.Drawing.Point(317, 142);
-            this.textBox12.Margin = new System.Windows.Forms.Padding(4);
-            this.textBox12.Name = "textBox12";
-            this.textBox12.Size = new System.Drawing.Size(50, 30);
-            this.textBox12.TabIndex = 29;
+            this.A4.Location = new System.Drawing.Point(317, 142);
+            this.A4.Margin = new System.Windows.Forms.Padding(4);
+            this.A4.Name = "A4";
+            this.A4.Size = new System.Drawing.Size(50, 30);
+            this.A4.TabIndex = 29;
             // 
-            // textBox13
+            // A5
             // 
-            this.textBox13.Font = new System.Drawing.Font("宋体", 12F);
-            this.textBox13.Location = new System.Drawing.Point(67, 142);
-            this.textBox13.Margin = new System.Windows.Forms.Padding(4);
-            this.textBox13.Name = "textBox13";
-            this.textBox13.Size = new System.Drawing.Size(50, 30);
-            this.textBox13.TabIndex = 28;
+            this.A5.Font = new System.Drawing.Font("宋体", 12F);
+            this.A5.Location = new System.Drawing.Point(67, 142);
+            this.A5.Margin = new System.Windows.Forms.Padding(4);
+            this.A5.Name = "A5";
+            this.A5.Size = new System.Drawing.Size(50, 30);
+            this.A5.TabIndex = 28;
             // 
             // label16
             // 
@@ -388,14 +388,14 @@
             this.label20.TabIndex = 38;
             this.label20.Text = "-A5";
             // 
-            // textBox10
+            // AA5
             // 
-            this.textBox10.Font = new System.Drawing.Font("宋体", 12F);
-            this.textBox10.Location = new System.Drawing.Point(317, 185);
-            this.textBox10.Margin = new System.Windows.Forms.Padding(4);
-            this.textBox10.Name = "textBox10";
-            this.textBox10.Size = new System.Drawing.Size(50, 30);
-            this.textBox10.TabIndex = 39;
+            this.AA5.Font = new System.Drawing.Font("宋体", 12F);
+            this.AA5.Location = new System.Drawing.Point(317, 185);
+            this.AA5.Margin = new System.Windows.Forms.Padding(4);
+            this.AA5.Name = "AA5";
+            this.AA5.Size = new System.Drawing.Size(50, 30);
+            this.AA5.TabIndex = 39;
             // 
             // label21
             // 
@@ -406,13 +406,13 @@
             this.label21.TabIndex = 40;
             this.label21.Text = "卖出可用股份C4";
             // 
-            // textBox14
+            // C4
             // 
-            this.textBox14.Location = new System.Drawing.Point(574, 185);
-            this.textBox14.Margin = new System.Windows.Forms.Padding(4);
-            this.textBox14.Name = "textBox14";
-            this.textBox14.Size = new System.Drawing.Size(50, 30);
-            this.textBox14.TabIndex = 41;
+            this.C4.Location = new System.Drawing.Point(574, 185);
+            this.C4.Margin = new System.Windows.Forms.Padding(4);
+            this.C4.Name = "C4";
+            this.C4.Size = new System.Drawing.Size(50, 30);
+            this.C4.TabIndex = 41;
             // 
             // button1
             // 
@@ -439,41 +439,41 @@
             this.ClientSize = new System.Drawing.Size(858, 229);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.textBox14);
+            this.Controls.Add(this.C4);
             this.Controls.Add(this.label21);
-            this.Controls.Add(this.textBox10);
+            this.Controls.Add(this.AA5);
             this.Controls.Add(this.label20);
             this.Controls.Add(this.label16);
-            this.Controls.Add(this.textBox8);
+            this.Controls.Add(this.C3);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.label17);
             this.Controls.Add(this.label18);
             this.Controls.Add(this.label19);
-            this.Controls.Add(this.textBox12);
-            this.Controls.Add(this.textBox13);
+            this.Controls.Add(this.A4);
+            this.Controls.Add(this.A5);
             this.Controls.Add(this.label11);
-            this.Controls.Add(this.textBox9);
+            this.Controls.Add(this.B3);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.label14);
             this.Controls.Add(this.label15);
-            this.Controls.Add(this.textBox11);
-            this.Controls.Add(this.textBox3);
+            this.Controls.Add(this.AA3);
+            this.Controls.Add(this.C2);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.textBox4);
+            this.Controls.Add(this.B2);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label10);
-            this.Controls.Add(this.textBox6);
-            this.Controls.Add(this.textBox7);
-            this.Controls.Add(this.textBox5);
+            this.Controls.Add(this.A3);
+            this.Controls.Add(this.AA2);
+            this.Controls.Add(this.C1);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.B1);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.A2);
             this.Controls.Add(this.A1);
             this.Font = new System.Drawing.Font("宋体", 12F);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
@@ -488,41 +488,41 @@
         #endregion
 
         private System.Windows.Forms.TextBox A1;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox A2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox B1;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox textBox5;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox C1;
+        private System.Windows.Forms.TextBox C2;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox B2;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.TextBox textBox6;
-        private System.Windows.Forms.TextBox textBox7;
-        private System.Windows.Forms.TextBox textBox9;
+        private System.Windows.Forms.TextBox A3;
+        private System.Windows.Forms.TextBox AA2;
+        private System.Windows.Forms.TextBox B3;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.TextBox textBox11;
+        private System.Windows.Forms.TextBox AA3;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.TextBox textBox8;
+        private System.Windows.Forms.TextBox C3;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.TextBox textBox12;
-        private System.Windows.Forms.TextBox textBox13;
+        private System.Windows.Forms.TextBox A4;
+        private System.Windows.Forms.TextBox A5;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label20;
-        private System.Windows.Forms.TextBox textBox10;
+        private System.Windows.Forms.TextBox AA5;
         private System.Windows.Forms.Label label21;
-        private System.Windows.Forms.TextBox textBox14;
+        private System.Windows.Forms.TextBox C4;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
     }
