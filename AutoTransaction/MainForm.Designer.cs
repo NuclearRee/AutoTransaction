@@ -50,9 +50,10 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.dataGridView1);
+            this.groupBox1.Font = new System.Drawing.Font("宋体", 9F);
             this.groupBox1.Location = new System.Drawing.Point(5, 289);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(759, 281);
+            this.groupBox1.Size = new System.Drawing.Size(750, 281);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "预警列表";
@@ -71,12 +72,12 @@
             this.CurrentPrice});
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.GridColor = System.Drawing.SystemColors.ButtonFace;
-            this.dataGridView1.Location = new System.Drawing.Point(3, 21);
+            this.dataGridView1.Location = new System.Drawing.Point(3, 19);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowTemplate.Height = 27;
-            this.dataGridView1.Size = new System.Drawing.Size(753, 257);
+            this.dataGridView1.Size = new System.Drawing.Size(745, 259);
             this.dataGridView1.TabIndex = 0;
             // 
             // Code
@@ -128,7 +129,7 @@
             this.groupbox2.Controls.Add(this.Start);
             this.groupbox2.Location = new System.Drawing.Point(5, 6);
             this.groupbox2.Name = "groupbox2";
-            this.groupbox2.Size = new System.Drawing.Size(756, 277);
+            this.groupbox2.Size = new System.Drawing.Size(750, 277);
             this.groupbox2.TabIndex = 1;
             this.groupbox2.TabStop = false;
             this.groupbox2.Text = "运行及参数配置";
@@ -150,6 +151,7 @@
             this.button1.TabIndex = 2;
             this.button1.Text = "参数配置";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
@@ -184,6 +186,8 @@
             this.ClientSize = new System.Drawing.Size(766, 572);
             this.Controls.Add(this.groupbox2);
             this.Controls.Add(this.groupBox1);
+            this.Font = new System.Drawing.Font("宋体", 9F);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Name = "MainForm";
             this.Text = "中投证券自动下单";
             this.groupBox1.ResumeLayout(false);

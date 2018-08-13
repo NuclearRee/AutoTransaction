@@ -9,17 +9,11 @@ using System.Windows.Forms;
 
 namespace AutoTransaction
 {
-    public partial class MainForm : Form
+    public partial class Form1 : Form
     {
-        public MainForm()
+        public Form1()
         {
             InitializeComponent();
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            var config = new Form1();
-            config.Show();
         }
     }
 }
