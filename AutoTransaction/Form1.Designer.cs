@@ -72,7 +72,7 @@
             // 
             this.A1.Font = new System.Drawing.Font("宋体", 12F);
             this.A1.Location = new System.Drawing.Point(67, 9);
-            this.A1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.A1.Margin = new System.Windows.Forms.Padding(4);
             this.A1.Name = "A1";
             this.A1.Size = new System.Drawing.Size(50, 30);
             this.A1.TabIndex = 0;
@@ -80,7 +80,7 @@
             // A2
             // 
             this.A2.Location = new System.Drawing.Point(317, 9);
-            this.A2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.A2.Margin = new System.Windows.Forms.Padding(4);
             this.A2.Name = "A2";
             this.A2.Size = new System.Drawing.Size(50, 30);
             this.A2.TabIndex = 1;
@@ -422,6 +422,7 @@
             this.button1.TabIndex = 42;
             this.button1.Text = "保存";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
@@ -477,7 +478,7 @@
             this.Controls.Add(this.A1);
             this.Font = new System.Drawing.Font("宋体", 12F);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
             this.Text = "参数配置";
             this.ResumeLayout(false);

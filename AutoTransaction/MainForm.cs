@@ -54,11 +54,11 @@ namespace AutoTransaction
         //启动判断
         static bool isRun = false;
         //卖出公式参数A
-        static float[] A_param = new float[5];
+        static double[] A_param = new double[5];
         //卖出公式参数B
-        static float[] B_param = new float[3];
+        static double[] B_param = new double[3];
         //卖出公式参数C
-        static float[] C_param = new float[4];
+        static double[] C_param = new double[4];
         public MainForm()
         {
             InitializeComponent();
@@ -242,6 +242,46 @@ namespace AutoTransaction
             GetNumboxElement("卖出下单");
             //获取ZT_SaleOrderUIElement
             GetZTOrder("卖出下单");
+            //获取A参数
+            string textA = IniFunc.GetString("Param", "A", "", Application.StartupPath + "\\config.ini").Trim();
+            if (textA.Contains("|"))
+            {
+
+                string[] array = textA.Split(new char[]
+                   {
+                        '|'
+                   });
+                for (int i = 0; i < array.Count(); i++)
+                    A_param[i] = Convert.ToDouble(array[i]);
+                
+            }
+            //获取B参数
+            string textB = IniFunc.GetString("Param", "B", "", Application.StartupPath + "\\config.ini").Trim();
+            if (textB.Contains("|"))
+            {
+
+                string[] array = textB.Split(new char[]
+                   {
+                        '|'
+                   });
+                for (int i = 0; i < array.Count(); i++)
+                    B_param[i] = Convert.ToDouble(array[i]);
+
+            }
+            //获取C参数
+            string textC= IniFunc.GetString("Param", "C", "", Application.StartupPath + "\\config.ini").Trim();
+            if (textC.Contains("|"))
+            {
+
+                string[] array = textC.Split(new char[]
+                   {
+                        '|'
+                   });
+                for (int i = 0; i < array.Count(); i++)
+                    C_param[i] = Convert.ToDouble(array[i]);
+
+            }
+
         }
 
         /// <summary>
@@ -405,9 +445,6 @@ namespace AutoTransaction
                                 }
                             }
                         }
-
-                        //uielement.WriteTextBox(elementlist[0], "\b\b\b\b\b\b");
-                        //uielement.WriteTextBox(elementlist[0], "000005");
                     }
                 }
             }
@@ -531,6 +568,9 @@ namespace AutoTransaction
             }
             dataGridView1.DataSource = bdlist;
             AutoOrder();
+            Thread updateT = new Thread(updateWarming);
+            updateT.IsBackground = true;
+            updateT.Start();
         }
 
 
@@ -541,22 +581,25 @@ namespace AutoTransaction
                  if(dataGridView1.RowCount>0)
                  {
                     var data = new WarmingData();
-                    data.code = dataGridView1.Rows[0].Cells[0].ToString();
-                    data.condition = dataGridView1.Rows[0].Cells[1].ToString();                  
+                    data.code = dataGridView1.Rows[0].Cells[0].Value.ToString();
+                    data.condition = dataGridView1.Rows[0].Cells[1].Value.ToString();                  
                     var code = IsNum(data.code);
+                    //BuyOrder(code);
                     if (data.condition.Contains("买入"))
                     {
-                        BuyOrder(data.code);
+                        BuyOrder(code);
+                        dataGridView1.Rows.RemoveAt(0);
                     }
                     else if (data.condition.Contains("卖出"))
                     {
-                        SaleOrder(data.code);
+                        SaleOrder(code);
+                        dataGridView1.Rows.RemoveAt(0);
                     }
                     else
                     {
 
                     }
-                 }
+                }
             }
         }
 

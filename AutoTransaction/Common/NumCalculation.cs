@@ -34,7 +34,7 @@ namespace AutoTransaction.Common
         /// <param name="_b_param">参数B</param>
         /// <param name="_c_param">参数C</param>
         /// <returns></returns>
-        public static string GetSaleNum(string  [] _positionlist, string [] _datalist, float [] _a_param,float[] _b_param,float[]  _c_param)
+        public static string GetSaleNum(string  [] _positionlist, string [] _datalist, double[] _a_param, double[] _b_param, double[]  _c_param)
         {
             //（DYNAINFO(5)- DYNAINFO(7)）*100/ DYNAINFO(7) 当天最高回落  (最高价 - 现价) * 100 / 现价
             var B = (Convert.ToDouble(_datalist[4]) - Convert.ToDouble(_datalist[3])) * 100 / Convert.ToDouble(_datalist[3]);

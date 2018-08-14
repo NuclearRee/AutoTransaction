@@ -51,6 +51,7 @@
     <Compile Include="Common\base64.cs" />
     <Compile Include="Common\HttpClientTool.cs" />
     <Compile Include="Common\iAutomationElement.cs" />
+    <Compile Include="Common\iniFunc.cs" />
     <Compile Include="Common\NumCalculation.cs" />
     <Compile Include="DataModel\DataItem.cs" />
     <Compile Include="DataModel\WarmingData.cs" />
