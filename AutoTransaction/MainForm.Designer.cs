@@ -30,6 +30,11 @@
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.Code = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Condition = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Time = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Price = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CurrentPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.groupbox2 = new System.Windows.Forms.GroupBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
@@ -37,11 +42,6 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.Start = new System.Windows.Forms.Button();
-            this.Code = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Condition = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Time = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Price = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CurrentPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupbox2.SuspendLayout();
@@ -79,67 +79,6 @@
             this.dataGridView1.RowTemplate.Height = 27;
             this.dataGridView1.Size = new System.Drawing.Size(744, 257);
             this.dataGridView1.TabIndex = 0;
-            // 
-            // groupbox2
-            // 
-            this.groupbox2.Controls.Add(this.textBox1);
-            this.groupbox2.Controls.Add(this.button3);
-            this.groupbox2.Controls.Add(this.button2);
-            this.groupbox2.Controls.Add(this.button1);
-            this.groupbox2.Controls.Add(this.Start);
-            this.groupbox2.Location = new System.Drawing.Point(5, 6);
-            this.groupbox2.Name = "groupbox2";
-            this.groupbox2.Size = new System.Drawing.Size(750, 277);
-            this.groupbox2.TabIndex = 1;
-            this.groupbox2.TabStop = false;
-            this.groupbox2.Text = "运行及参数配置";
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(7, 24);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(542, 238);
-            this.textBox1.TabIndex = 5;
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(555, 217);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(180, 45);
-            this.button3.TabIndex = 4;
-            this.button3.Text = "停止运行";
-            this.button3.UseVisualStyleBackColor = true;
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(555, 25);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(180, 45);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "加载句柄";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(555, 90);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(180, 45);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "参数配置";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // Start
-            // 
-            this.Start.Location = new System.Drawing.Point(555, 155);
-            this.Start.Name = "Start";
-            this.Start.Size = new System.Drawing.Size(180, 45);
-            this.Start.TabIndex = 3;
-            this.Start.Text = "开始运行";
-            this.Start.UseVisualStyleBackColor = true;
-            this.Start.Click += new System.EventHandler(this.Start_Click);
             // 
             // Code
             // 
@@ -185,6 +124,68 @@
             this.CurrentPrice.Name = "CurrentPrice";
             this.CurrentPrice.ReadOnly = true;
             this.CurrentPrice.Width = 150;
+            // 
+            // groupbox2
+            // 
+            this.groupbox2.Controls.Add(this.textBox1);
+            this.groupbox2.Controls.Add(this.button3);
+            this.groupbox2.Controls.Add(this.button2);
+            this.groupbox2.Controls.Add(this.button1);
+            this.groupbox2.Controls.Add(this.Start);
+            this.groupbox2.Location = new System.Drawing.Point(5, 6);
+            this.groupbox2.Name = "groupbox2";
+            this.groupbox2.Size = new System.Drawing.Size(750, 277);
+            this.groupbox2.TabIndex = 1;
+            this.groupbox2.TabStop = false;
+            this.groupbox2.Text = "运行及参数配置";
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(7, 24);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.ReadOnly = true;
+            this.textBox1.Size = new System.Drawing.Size(542, 238);
+            this.textBox1.TabIndex = 5;
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(555, 217);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(180, 45);
+            this.button3.TabIndex = 4;
+            this.button3.Text = "停止运行";
+            this.button3.UseVisualStyleBackColor = true;
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(555, 25);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(180, 45);
+            this.button2.TabIndex = 1;
+            this.button2.Text = "加载句柄";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(555, 90);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(180, 45);
+            this.button1.TabIndex = 2;
+            this.button1.Text = "参数配置";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // Start
+            // 
+            this.Start.Location = new System.Drawing.Point(555, 155);
+            this.Start.Name = "Start";
+            this.Start.Size = new System.Drawing.Size(180, 45);
+            this.Start.TabIndex = 3;
+            this.Start.Text = "开始运行";
+            this.Start.UseVisualStyleBackColor = true;
+            this.Start.Click += new System.EventHandler(this.Start_Click);
             // 
             // MainForm
             // 

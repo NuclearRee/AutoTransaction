@@ -54,11 +54,11 @@ namespace AutoTransaction
         //启动判断
         static bool isRun = false;
         //卖出公式参数A
-        static double[] A_param = new double[5];
+        public static double[] A_param = new double[5];
         //卖出公式参数B
-        static double[] B_param = new double[3];
+        public static double[] B_param = new double[3];
         //卖出公式参数C
-        static double[] C_param = new double[4];
+        public static double[] C_param = new double[4];
         public MainForm()
         {
             InitializeComponent();
@@ -572,7 +572,18 @@ namespace AutoTransaction
             updateT.IsBackground = true;
             updateT.Start();
         }
-
+        static public  void SaveInifile()
+        {
+            string textA = "";
+            string textB = "";
+            string textC = "";
+            textA = A_param[0].ToString() + "|" + A_param[1].ToString() + "|" + A_param[2].ToString() + "|" + A_param[3].ToString() + "|" + A_param[4].ToString();
+            textB = B_param[0].ToString() + "|" + B_param[1].ToString() + "|" + B_param[2].ToString();
+            textC = C_param[0].ToString() + "|" + C_param[1].ToString() + "|" + C_param[2].ToString() + "|" + C_param[3].ToString();
+            IniFunc.WriteString("userConfig", "A", textA, Application.StartupPath + "\\config.ini");
+            IniFunc.WriteString("userConfig", "B", textB, Application.StartupPath + "\\config.ini");
+            IniFunc.WriteString("userConfig", "C", textC, Application.StartupPath + "\\config.ini");
+        }
 
         void AutoOrder()
         {
