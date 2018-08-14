@@ -53,6 +53,7 @@
     <Compile Include="Common\iAutomationElement.cs" />
     <Compile Include="Common\NumCalculation.cs" />
     <Compile Include="DataModel\DataItem.cs" />
+    <Compile Include="DataModel\WarmingData.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>

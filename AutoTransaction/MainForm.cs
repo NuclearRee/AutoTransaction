@@ -49,6 +49,16 @@ namespace AutoTransaction
         static Dictionary<string, DataItem> ZT_DataList = new Dictionary<string, DataItem>();
 
         static AutomationElement buyWindowsElement;
+        //预警数据
+        static BindingList<WarmingData> bdlist;
+        //启动判断
+        static bool isRun = false;
+        //卖出公式参数A
+        static float[] A_param = new float[5];
+        //卖出公式参数B
+        static float[] B_param = new float[3];
+        //卖出公式参数C
+        static float[] C_param = new float[4];
         public MainForm()
         {
             InitializeComponent();
@@ -122,7 +132,19 @@ namespace AutoTransaction
             //ReadWarmingOrder()
             HttpClientTool post = HttpClientTool.GetInstance();
             var list = new Dictionary<string, string>();
-            var data = post.doPost("http://hq.sinajs.cn/list=sz" + _stockCode, list);
+            var data = "";
+            if (_stockCode.StartsWith("0")||_stockCode.StartsWith("3"))
+            {
+                 data = post.doPost("http://hq.sinajs.cn/list=sz" + _stockCode, list);
+            }
+            else if(_stockCode.StartsWith("6"))
+            {
+                 data = post.doPost("http://hq.sinajs.cn/list=sh" + _stockCode, list);
+            }
+            else
+            {
+                return null;
+            }
             data = data.Substring(data.IndexOf("\""));
             data = data.Replace("\"", "");
             data = data.Replace(";", "");
@@ -148,6 +170,7 @@ namespace AutoTransaction
             var m = Convert.ToDecimal(datalists[3]);
             var canbuynum = Convert.ToInt32(n / m);
             var _num = NumCalculation.GetBuyNum(datalists, canbuynum);
+            _num = _num / 100 * 100;
             orderClick.WriteTextBox(ZT_BuyNum, "\b\b\b\b\b\b");
             orderClick.WriteTextBox(ZT_BuyNum, _num.ToString());
             Thread.Sleep(500);
@@ -159,10 +182,12 @@ namespace AutoTransaction
         /// 股票卖出
         /// </summary>
         /// <param name="_securitiesCode">证券代码</param>
-        /// <param name="_num">数量</param>
-        static void SaleOrder(string _securitiesCode, string _num)
+        static void SaleOrder(string _securitiesCode)
         {
             var orderClick = new iAutomationElement();
+            var datalist = getSotckData(_securitiesCode);
+            var positiondata = ZT_DataList[_securitiesCode];
+            var _num = NumCalculation.GetSaleNum(positiondata.data,datalist,A_param,B_param,C_param);
             orderClick.InvokeButton(ZT_SaleButtonElement);
             Thread.Sleep(500);
             orderClick.WriteTextBox(ZT_SaleSecuritiesCode, "\b\b\b\b\b\b");
@@ -486,6 +511,56 @@ namespace AutoTransaction
         }
 
         private void Start_Click(object sender, EventArgs e)
+        {
+            isRun = true;
+            bdlist = new BindingList<WarmingData>();
+            DZH_DataList.Clear();
+            var data = new iAutomationElement();
+            DZH_DataList = data.GetViewList(DZH_uiElement, 5);
+            foreach (var i in DZH_DataList)
+            {
+                var item = new WarmingData();
+                item.code = i.Value.data[0];
+                item.condition = i.Value.data[1];
+                item.time = i.Value.data[2];
+                item.price = i.Value.data[3];
+                item.nowprice = i.Value.data[4];
+                bdlist.Add(item);
+                //var code = IsNum(i.Value.data[0]);
+                //BuyOrder(code);
+            }
+            dataGridView1.DataSource = bdlist;
+            AutoOrder();
+        }
+
+
+        void AutoOrder()
+        {
+            while (isRun)
+            {
+                 if(dataGridView1.RowCount>0)
+                 {
+                    var data = new WarmingData();
+                    data.code = dataGridView1.Rows[0].Cells[0].ToString();
+                    data.condition = dataGridView1.Rows[0].Cells[1].ToString();                  
+                    var code = IsNum(data.code);
+                    if (data.condition.Contains("买入"))
+                    {
+                        BuyOrder(data.code);
+                    }
+                    else if (data.condition.Contains("卖出"))
+                    {
+                        SaleOrder(data.code);
+                    }
+                    else
+                    {
+
+                    }
+                 }
+            }
+        }
+
+        void updateWarming()
         {
 
         }

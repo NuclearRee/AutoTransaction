@@ -29,19 +29,19 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.groupbox2 = new System.Windows.Forms.GroupBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.Start = new System.Windows.Forms.Button();
             this.Code = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Condition = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Time = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Price = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CurrentPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.groupbox2 = new System.Windows.Forms.GroupBox();
-            this.Start = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupbox2.SuspendLayout();
@@ -72,53 +72,13 @@
             this.CurrentPrice});
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.GridColor = System.Drawing.SystemColors.ButtonFace;
-            this.dataGridView1.Location = new System.Drawing.Point(3, 19);
+            this.dataGridView1.Location = new System.Drawing.Point(3, 21);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowTemplate.Height = 27;
-            this.dataGridView1.Size = new System.Drawing.Size(745, 259);
+            this.dataGridView1.Size = new System.Drawing.Size(744, 257);
             this.dataGridView1.TabIndex = 0;
-            // 
-            // Code
-            // 
-            this.Code.HeaderText = "股票代码";
-            this.Code.MinimumWidth = 180;
-            this.Code.Name = "Code";
-            this.Code.ReadOnly = true;
-            this.Code.Width = 180;
-            // 
-            // Condition
-            // 
-            this.Condition.HeaderText = "预警条件";
-            this.Condition.MinimumWidth = 120;
-            this.Condition.Name = "Condition";
-            this.Condition.ReadOnly = true;
-            this.Condition.Width = 120;
-            // 
-            // Time
-            // 
-            this.Time.HeaderText = "预警时间";
-            this.Time.MinimumWidth = 180;
-            this.Time.Name = "Time";
-            this.Time.ReadOnly = true;
-            this.Time.Width = 180;
-            // 
-            // Price
-            // 
-            this.Price.HeaderText = "预警价格";
-            this.Price.MinimumWidth = 120;
-            this.Price.Name = "Price";
-            this.Price.ReadOnly = true;
-            this.Price.Width = 120;
-            // 
-            // CurrentPrice
-            // 
-            this.CurrentPrice.HeaderText = "现价/盈亏";
-            this.CurrentPrice.MinimumWidth = 150;
-            this.CurrentPrice.Name = "CurrentPrice";
-            this.CurrentPrice.ReadOnly = true;
-            this.CurrentPrice.Width = 150;
             // 
             // groupbox2
             // 
@@ -134,25 +94,22 @@
             this.groupbox2.TabStop = false;
             this.groupbox2.Text = "运行及参数配置";
             // 
-            // Start
+            // textBox1
             // 
-            this.Start.Location = new System.Drawing.Point(555, 155);
-            this.Start.Name = "Start";
-            this.Start.Size = new System.Drawing.Size(180, 45);
-            this.Start.TabIndex = 3;
-            this.Start.Text = "开始运行";
-            this.Start.UseVisualStyleBackColor = true;
-            this.Start.Click += new System.EventHandler(this.Start_Click);
+            this.textBox1.Location = new System.Drawing.Point(7, 24);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(542, 238);
+            this.textBox1.TabIndex = 5;
             // 
-            // button1
+            // button3
             // 
-            this.button1.Location = new System.Drawing.Point(555, 90);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(180, 45);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "参数配置";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.button3.Location = new System.Drawing.Point(555, 217);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(180, 45);
+            this.button3.TabIndex = 4;
+            this.button3.Text = "停止运行";
+            this.button3.UseVisualStyleBackColor = true;
             // 
             // button2
             // 
@@ -164,22 +121,70 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
-            // button3
+            // button1
             // 
-            this.button3.Location = new System.Drawing.Point(555, 217);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(180, 45);
-            this.button3.TabIndex = 4;
-            this.button3.Text = "停止运行";
-            this.button3.UseVisualStyleBackColor = true;
+            this.button1.Location = new System.Drawing.Point(555, 90);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(180, 45);
+            this.button1.TabIndex = 2;
+            this.button1.Text = "参数配置";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // textBox1
+            // Start
             // 
-            this.textBox1.Location = new System.Drawing.Point(7, 24);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(542, 238);
-            this.textBox1.TabIndex = 5;
+            this.Start.Location = new System.Drawing.Point(555, 155);
+            this.Start.Name = "Start";
+            this.Start.Size = new System.Drawing.Size(180, 45);
+            this.Start.TabIndex = 3;
+            this.Start.Text = "开始运行";
+            this.Start.UseVisualStyleBackColor = true;
+            this.Start.Click += new System.EventHandler(this.Start_Click);
+            // 
+            // Code
+            // 
+            this.Code.DataPropertyName = "code";
+            this.Code.HeaderText = "股票代码";
+            this.Code.MinimumWidth = 180;
+            this.Code.Name = "Code";
+            this.Code.ReadOnly = true;
+            this.Code.Width = 180;
+            // 
+            // Condition
+            // 
+            this.Condition.DataPropertyName = "condition";
+            this.Condition.HeaderText = "预警条件";
+            this.Condition.MinimumWidth = 120;
+            this.Condition.Name = "Condition";
+            this.Condition.ReadOnly = true;
+            this.Condition.Width = 120;
+            // 
+            // Time
+            // 
+            this.Time.DataPropertyName = "time";
+            this.Time.HeaderText = "预警时间";
+            this.Time.MinimumWidth = 180;
+            this.Time.Name = "Time";
+            this.Time.ReadOnly = true;
+            this.Time.Width = 180;
+            // 
+            // Price
+            // 
+            this.Price.DataPropertyName = "price";
+            this.Price.HeaderText = "预警价格";
+            this.Price.MinimumWidth = 120;
+            this.Price.Name = "Price";
+            this.Price.ReadOnly = true;
+            this.Price.Width = 120;
+            // 
+            // CurrentPrice
+            // 
+            this.CurrentPrice.DataPropertyName = "nowprice";
+            this.CurrentPrice.HeaderText = "现价/盈亏";
+            this.CurrentPrice.MinimumWidth = 150;
+            this.CurrentPrice.Name = "CurrentPrice";
+            this.CurrentPrice.ReadOnly = true;
+            this.CurrentPrice.Width = 150;
             // 
             // MainForm
             // 
@@ -205,17 +210,17 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Code;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Condition;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Time;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Price;
-        private System.Windows.Forms.DataGridViewTextBoxColumn CurrentPrice;
         private System.Windows.Forms.GroupBox groupbox2;
         private System.Windows.Forms.Button Start;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Code;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Condition;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Time;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Price;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CurrentPrice;
     }
 }
 

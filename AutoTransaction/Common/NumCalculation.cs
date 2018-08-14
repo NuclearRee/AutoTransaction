@@ -34,7 +34,7 @@ namespace AutoTransaction.Common
         /// <param name="_b_param">参数B</param>
         /// <param name="_c_param">参数C</param>
         /// <returns></returns>
-        public static float GetSaleNum(string  [] _positionlist, string [] _datalist, float [] _a_param,float[] _b_param,float[]  _c_param)
+        public static string GetSaleNum(string  [] _positionlist, string [] _datalist, float [] _a_param,float[] _b_param,float[]  _c_param)
         {
             //（DYNAINFO(5)- DYNAINFO(7)）*100/ DYNAINFO(7) 当天最高回落  (最高价 - 现价) * 100 / 现价
             var B = (Convert.ToDouble(_datalist[4]) - Convert.ToDouble(_datalist[3])) * 100 / Convert.ToDouble(_datalist[3]);
@@ -45,22 +45,22 @@ namespace AutoTransaction.Common
                 //当盈亏比例〉A1%且盈亏比例<A2%时，当天最高价回落B1%时卖出可用股份C1%股份
                 if (Ratio > _a_param[0] && Ratio <= _a_param[1] && B >= _b_param[0])
                 {
-                    return _c_param[0];
+                    return Convert.ToInt32(_c_param[0] * Convert.ToDouble(_positionlist[3])).ToString();
                 }
                 //当盈亏比例〉A2%且盈亏比例<A3%时，当天最高价回落B2%时卖出可用股份C2%股份
                 else if (Ratio > _a_param[1] && Ratio <= _a_param[2] && B >= _b_param[1])
                 {
-                    return _c_param[1];
+                    return Convert.ToInt32(_c_param[1] * Convert.ToDouble(_positionlist[3])).ToString();
                 }
                 //当盈亏比例〉A3%时，当天最高价回落B3%时卖出可用股份100%的全部股份
                 else if (Ratio > _a_param[2] && B >= _b_param[2])
                 {
-                    return 1;
+                    return Convert.ToInt32(_positionlist[3]).ToString();
                 }
                 //其他情况返回0
                 else
                 {
-                    return 0;
+                    return "0";
                 }
             }
             else
@@ -68,17 +68,17 @@ namespace AutoTransaction.Common
                 //当盈亏比例<-A4%且盈亏比例>-A5%时，卖出可用股份C3%股份
                 if (Ratio > -_a_param [4] && Ratio < -_a_param[3])
                 {
-                    return _c_param[2];
+                    return Convert.ToInt32(_c_param[2]*Convert.ToDouble(_positionlist[3])).ToString();
                 }
                 //当盈亏比例<-A5%时，卖出可用股份C4%股份
                 else if (Ratio < -_a_param[4])
                 {
-                    return _c_param[3];
+                    return Convert.ToInt32(_c_param[3] * Convert.ToDouble(_positionlist[3])).ToString();
                 }
                 //其他情况返回0
                 else
                 {
-                    return 0;
+                    return "0";
                 }
             }
            
