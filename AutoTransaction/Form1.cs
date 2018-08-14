@@ -33,6 +33,7 @@ namespace AutoTransaction
             MainForm.C_param[2] = Convert.ToDouble(C3.Text);
             MainForm.C_param[3] = Convert.ToDouble(C4.Text);
             MainForm.SaveInifile();
+            
             MessageBox.Show("保存成功");
             this.Close();
         }

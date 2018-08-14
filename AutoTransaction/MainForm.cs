@@ -88,7 +88,7 @@ namespace AutoTransaction
         /// 输出日志
         /// </summary>
         /// <param name="_content">日志内容</param>
-        public void output(string _content)
+        public  void output(string _content)
         {
             if (textBox1.GetLineFromCharIndex(textBox1.Text.Length) > 100)
                 textBox1.Text = "";
