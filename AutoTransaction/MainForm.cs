@@ -562,6 +562,7 @@ namespace AutoTransaction
                 item.time = i.Value.data[2];
                 item.price = i.Value.data[3];
                 item.nowprice = i.Value.data[4];
+                item.flag = "";
                 bdlist.Add(item);
                 //var code = IsNum(i.Value.data[0]);
                 //BuyOrder(code);
@@ -584,38 +585,80 @@ namespace AutoTransaction
             IniFunc.WriteString("userConfig", "B", textB, Application.StartupPath + "\\config.ini");
             IniFunc.WriteString("userConfig", "C", textC, Application.StartupPath + "\\config.ini");
         }
-
+        /// <summary>
+        /// 自动下单
+        /// </summary>
         void AutoOrder()
         {
+            int count = 0;
             while (isRun)
             {
-                 if(dataGridView1.RowCount>0)
+                 if(count < bdlist.Count)
                  {
                     var data = new WarmingData();
-                    data.code = dataGridView1.Rows[0].Cells[0].Value.ToString();
-                    data.condition = dataGridView1.Rows[0].Cells[1].Value.ToString();                  
+                    data.code = bdlist[count].code;
+                    data.condition = bdlist[count].condition;
                     var code = IsNum(data.code);
-                    //BuyOrder(code);
-                    if (data.condition.Contains("买入"))
+
+                    if (data.condition.Contains("买入") && bdlist[count].flag == "")
                     {
                         BuyOrder(code);
-                        dataGridView1.Rows.RemoveAt(0);
+                        bdlist[count].flag = "1";
                     }
-                    else if (data.condition.Contains("卖出"))
+                    else if (data.condition.Contains("卖出") && bdlist[count].flag == "")
                     {
                         SaleOrder(code);
-                        dataGridView1.Rows.RemoveAt(0);
+                        bdlist[count].flag = "1";
                     }
                     else
                     {
 
                     }
+                    count++;
+                 }
+                else
+                {
+                    count = 0;
                 }
             }
         }
-
+        /// <summary>
+        /// 更新预警列表
+        /// </summary>
         void updateWarming()
         {
+            while (isRun)
+            {
+                BindingList<WarmingData> listA = new BindingList<WarmingData>();
+                var data = new iAutomationElement();
+                var list = data.GetViewList(DZH_uiElement, 5);
+                foreach (var i in list)
+                {
+                    var item = new WarmingData();
+                    item.code = i.Value.data[0];
+                    item.condition = i.Value.data[1];
+                    item.time = i.Value.data[2];
+                    item.price = i.Value.data[3];
+                    item.nowprice = i.Value.data[4];
+                    item.flag = "";
+                    listA.Add(item);
+                    //var code = IsNum(i.Value.data[0]);
+                    //BuyOrder(code);
+                }
+
+                var query = listA.Where(p =>
+                {
+                    if ((!bdlist.Any(s => s.code == p.code)) && bdlist.Any(s => s.condition == p.condition)) return true;
+                    return false;
+                });
+
+                foreach (var item in query)
+                {
+                    bdlist.Add(item);
+                }
+                Thread.Sleep(5000);
+            }
+            
 
         }
     }

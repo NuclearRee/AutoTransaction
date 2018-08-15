@@ -24,5 +24,9 @@ namespace AutoTransaction.DataModel
 
         public string nowprice { get; set; }
 
+        //标记
+
+        public string flag { get; set; }
+
     }
 }
