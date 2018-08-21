@@ -32,6 +32,8 @@ namespace AutoTransaction
         static AutomationElement ZT_BuyConfirm;
         //中投证券可用资金 AutomationElementObj
         static AutomationElement ZT_CanUseMoney;
+        //中投证券买价 AutomationElementObj
+        static AutomationElement ZT_BuyPrice;
         //中投证券卖出按钮 AutomationElementObj
         static AutomationElement ZT_SaleButtonElement;
         //中投证券卖出下单 证券代码框 AutomationElementObj
@@ -44,6 +46,8 @@ namespace AutoTransaction
         static AutomationElement ZT_SaleOrder;
         //中投证券卖出确认 AutomationElementObj
         static AutomationElement ZT_SaleConfirm;
+        //中投证券持仓按钮 AutomationElementObj
+        static AutomationElement ZT_PositionOrder;
 
         //中投证券持仓单数据
         static Dictionary<string, DataItem> ZT_DataList = new Dictionary<string, DataItem>();
@@ -59,6 +63,7 @@ namespace AutoTransaction
         public static double[] B_param = new double[3];
         //卖出公式参数C
         public static double[] C_param = new double[4];
+        
         public MainForm()
         {
             InitializeComponent();
@@ -171,12 +176,23 @@ namespace AutoTransaction
             var canbuynum = Convert.ToInt32(n / m);
             var _num = NumCalculation.GetBuyNum(datalists, canbuynum);
             _num = _num / 100 * 100;
-            orderClick.WriteTextBox(ZT_BuyNum, "\b\b\b\b\b\b");
-            orderClick.WriteTextBox(ZT_BuyNum, _num.ToString());
-            Thread.Sleep(500);
-            orderClick.InvokeButton(ZT_BuyOrder);
-            if (ZT_BuyConfirm == null)
-                GetConfirm("买入确认");
+            if(_num != 0)
+            {
+                orderClick.WriteTextBox(ZT_BuyNum, "\b\b\b\b\b\b");
+                orderClick.WriteTextBox(ZT_BuyNum, _num.ToString());
+                Thread.Sleep(500);
+                orderClick.InvokeButton(ZT_BuyOrder);
+                if (ZT_BuyConfirm == null)
+                { 
+                    
+                    GetConfirm("买入确认");
+                  
+                }              
+                orderClick.InvokeButton(ZT_BuyConfirm);
+                Clickconfirm();                
+
+            }
+            
         }
         /// <summary>
         /// 股票卖出
@@ -188,17 +204,36 @@ namespace AutoTransaction
             var datalist = getSotckData(_securitiesCode);
             var positiondata = ZT_DataList[_securitiesCode];
             var _num = NumCalculation.GetSaleNum(positiondata.data,datalist,A_param,B_param,C_param);
-            orderClick.InvokeButton(ZT_SaleButtonElement);
-            Thread.Sleep(500);
-            orderClick.WriteTextBox(ZT_SaleSecuritiesCode, "\b\b\b\b\b\b");
-            orderClick.WriteTextBox(ZT_SaleSecuritiesCode, _securitiesCode);
-            Thread.Sleep(500);
-            orderClick.WriteTextBox(ZT_SaleNum, "\b\b\b\b\b\b");
-            orderClick.WriteTextBox(ZT_SaleNum, _num);
-            Thread.Sleep(500);
-            orderClick.InvokeButton(ZT_SaleOrder);
-            if (ZT_SaleConfirm == null)
-                GetConfirm("卖出确认");
+            if(_num != "0")
+            {
+                orderClick.InvokeButton(ZT_SaleButtonElement);
+                Thread.Sleep(500);
+                orderClick.WriteTextBox(ZT_SaleSecuritiesCode, "\b\b\b\b\b\b");
+                orderClick.WriteTextBox(ZT_SaleSecuritiesCode, _securitiesCode);
+                Thread.Sleep(500);
+                orderClick.WriteTextBox(ZT_SaleNum, "\b\b\b\b\b\b");
+                orderClick.WriteTextBox(ZT_SaleNum, _num);
+                Thread.Sleep(500);
+                orderClick.InvokeButton(ZT_SaleOrder);
+                if (ZT_SaleConfirm == null)
+                {
+                    GetConfirm("卖出确认");
+                   
+                }
+                orderClick.InvokeButton(ZT_SaleConfirm);
+                Clickconfirm();
+                if (_num != positiondata.data[1])
+                {
+                    ZT_DataList[_securitiesCode].data[1] = Convert.ToInt32(positiondata.data[1]) - Convert.ToInt32(_num) + "";
+                }
+                else
+                {
+                    ZT_DataList.Remove(_securitiesCode);
+                }
+
+
+            }
+            
         }
 
         /// <summary>
@@ -217,8 +252,8 @@ namespace AutoTransaction
             var click = new iAutomationElement();
             //点击买入按钮
             click.InvokeButton(ZT_BuyButtonElement);
-            //获取持仓单UIElement
-            GetZTViewListElement("买入下单");
+            ////获取持仓单UIElement
+            //GetZTViewListElement("买入下单");
             //获取买入界面证券代码TextBox UIElement
             GetZTSecodeElement("买入下单");
             //输入证券代码
@@ -229,11 +264,13 @@ namespace AutoTransaction
             GetZTOrder("买入下单");
             //获取 ZT_CanUseMoneyUIElement
             GetCanUseMoney();
+            //获取 ZT_BuyPriceUIElement
+            //GetBuyPrice();
             //5.获取卖出界面UIElement           
             //点击买入按钮
             click.InvokeButton(ZT_SaleButtonElement);
-            //获取持仓单UIElement
-            GetZTViewListElement("卖出下单");
+            ////获取持仓单UIElement
+            //GetZTViewListElement("卖出下单");
             //获取买入界面证券代码TextBox UIElement
             GetZTSecodeElement("卖出下单");
             //输入证券代码
@@ -242,6 +279,8 @@ namespace AutoTransaction
             GetNumboxElement("卖出下单");
             //获取ZT_SaleOrderUIElement
             GetZTOrder("卖出下单");
+            //获取持仓按钮 
+            GetZT_PositionOrderButtonElement();
             //获取A参数
             string textA = IniFunc.GetString("Param", "A", "", Application.StartupPath + "\\config.ini").Trim();
             if (textA.Contains("|"))
@@ -281,8 +320,11 @@ namespace AutoTransaction
                     C_param[i] = Convert.ToDouble(array[i]);
 
             }
+           
 
         }
+
+       
 
         /// <summary>
         /// 获取确认交易按钮 UIElement
@@ -311,6 +353,32 @@ namespace AutoTransaction
                         }
                     }
                 }
+            }
+        }
+        
+        static void Clickconfirm()
+        {
+            var uielement = new iAutomationElement();
+        var elementlist = uielement.enumRoot();
+        elementlist = uielement.FindByName("中投证券", elementlist);
+            elementlist = uielement.enumNode(elementlist[0]);
+            if (elementlist.Count > 1)
+            {
+                foreach (AutomationElement item in elementlist)
+                {
+                    var list = uielement.enumDescendants(item, "提示");
+                    if (list.Count > 0)
+                    {
+                        buyWindowsElement = TreeWalker.RawViewWalker.GetParent(list[0]);
+                        elementlist = uielement.enumNode(buyWindowsElement);                        
+                        elementlist = uielement.FindByName("确认", elementlist);
+                        var orderClick = new iAutomationElement();
+                        orderClick.InvokeButton(elementlist[0]);
+
+
+
+                    }
+}
             }
         }
 
@@ -355,8 +423,7 @@ namespace AutoTransaction
                     {
                         buyWindowsElement = TreeWalker.RawViewWalker.GetParent(list[0]);
                         elementlist = uielement.enumNode(buyWindowsElement);
-                        //foreach (var count in elementlist)
-                        //    Console.WriteLine(count.Current.ClassName + " " + count.Current.Name);
+                        
                         elementlist = uielement.FindByClassName("SysListView32", elementlist);
                         if (_type == "买入下单")
                         {
@@ -549,6 +616,9 @@ namespace AutoTransaction
 
         private void Start_Click(object sender, EventArgs e)
         {
+            button1.Enabled = false;
+            button2.Enabled = false;
+            Start.Enabled = false;
             isRun = true;
             bdlist = new BindingList<WarmingData>();
             DZH_DataList.Clear();
@@ -568,11 +638,16 @@ namespace AutoTransaction
                 //BuyOrder(code);
             }
             dataGridView1.DataSource = bdlist;
-            AutoOrder();
+            Thread orderThread = new Thread(AutoOrder);
+            orderThread.IsBackground = true;
+            orderThread.Start();
             Thread updateT = new Thread(updateWarming);
             updateT.IsBackground = true;
             updateT.Start();
         }
+        /// <summary>
+        /// 保存配置文件
+        /// </summary>
         static public  void SaveInifile()
         {
             string textA = "";
@@ -581,10 +656,11 @@ namespace AutoTransaction
             textA = A_param[0].ToString() + "|" + A_param[1].ToString() + "|" + A_param[2].ToString() + "|" + A_param[3].ToString() + "|" + A_param[4].ToString();
             textB = B_param[0].ToString() + "|" + B_param[1].ToString() + "|" + B_param[2].ToString();
             textC = C_param[0].ToString() + "|" + C_param[1].ToString() + "|" + C_param[2].ToString() + "|" + C_param[3].ToString();
-            IniFunc.WriteString("userConfig", "A", textA, Application.StartupPath + "\\config.ini");
-            IniFunc.WriteString("userConfig", "B", textB, Application.StartupPath + "\\config.ini");
-            IniFunc.WriteString("userConfig", "C", textC, Application.StartupPath + "\\config.ini");
+            IniFunc.WriteString("Param", "A", textA, Application.StartupPath + "\\config.ini");
+            IniFunc.WriteString("Param", "B", textB, Application.StartupPath + "\\config.ini");
+            IniFunc.WriteString("Param", "C", textC, Application.StartupPath + "\\config.ini");
         }
+        
         /// <summary>
         /// 自动下单
         /// </summary>
@@ -593,7 +669,8 @@ namespace AutoTransaction
             int count = 0;
             while (isRun)
             {
-                 if(count < bdlist.Count)
+                 PositionDetection();
+                 if (count < bdlist.Count)
                  {
                     var data = new WarmingData();
                     data.code = bdlist[count].code;
@@ -660,6 +737,82 @@ namespace AutoTransaction
             }
             
 
+        }
+        /// <summary>
+        /// 获取持仓按钮
+        /// </summary>
+        static void GetZT_PositionOrderButtonElement()
+        {
+            var uielement = new iAutomationElement();
+            var elementlist = uielement.enumRoot();
+            elementlist = uielement.FindByName("中投证券", elementlist);
+            elementlist = uielement.enumNode(elementlist[0]);
+            if (elementlist.Count > 1)
+            {
+                foreach (AutomationElement item in elementlist)
+                {
+                    var list = uielement.enumDescendants(item, "锁定");
+                    if (list.Count > 0)
+                    {
+                        buyWindowsElement = TreeWalker.RawViewWalker.GetParent(list[0]);
+                        elementlist = uielement.enumNode(buyWindowsElement);
+                        elementlist = uielement.FindByName("持仓", elementlist);
+
+                        ZT_PositionOrder = elementlist[0];
+                        //uielement.InvokeButton(elementlist[0]);
+                    }
+                }
+            }
+        }
+        /// <summary>
+        /// 持仓检测
+        /// </summary>
+        void PositionDetection()
+        {
+            foreach (var item in ZT_DataList)
+            {
+                var code = item.Key;
+                var orderClick = new iAutomationElement();
+                var datalist = getSotckData(code);
+                var positiondata = ZT_DataList[code];
+                var _num = NumCalculation.GetSaleNum(positiondata.data, datalist, A_param, B_param, C_param);
+                if(_num != "0")
+                {
+                    
+                    orderClick.InvokeButton(ZT_SaleButtonElement);
+                    Thread.Sleep(500);
+                    orderClick.WriteTextBox(ZT_SaleSecuritiesCode, "\b\b\b\b\b\b");
+                    orderClick.WriteTextBox(ZT_SaleSecuritiesCode, code);
+                    Thread.Sleep(500);
+                    orderClick.WriteTextBox(ZT_SaleNum, "\b\b\b\b\b\b");
+                    orderClick.WriteTextBox(ZT_SaleNum, _num);
+                    Thread.Sleep(500);
+                    orderClick.InvokeButton(ZT_SaleOrder);
+                    if (ZT_SaleConfirm == null)
+                    {
+                        GetConfirm("卖出确认");
+                        
+                    }
+                    orderClick.InvokeButton(ZT_SaleConfirm);
+                    if (_num != positiondata.data[1])
+                    {
+                        ZT_DataList[code].data[1] = Convert.ToInt32(positiondata.data[1]) - Convert.ToInt32(_num) + "";
+                    }
+                    else
+                    {
+                        ZT_DataList.Remove(code);
+                    }
+                }
+                
+            }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            button1.Enabled = true;
+            button2.Enabled = true;
+            Start.Enabled = true;
+            isRun = false;
         }
     }
 }
