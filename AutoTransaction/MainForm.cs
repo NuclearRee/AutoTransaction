@@ -48,7 +48,8 @@ namespace AutoTransaction
         static AutomationElement ZT_SaleConfirm;
         //中投证券持仓按钮 AutomationElementObj
         static AutomationElement ZT_PositionOrder;
-
+        //中投证券持仓输出按钮
+        static AutomationElement ZT_Output;
         //中投证券持仓单数据
         static Dictionary<string, DataItem> ZT_DataList = new Dictionary<string, DataItem>();
 
@@ -764,6 +765,34 @@ namespace AutoTransaction
                 }
             }
         }
+        /// <summary>
+        /// 获取输出AutomationElement
+        /// </summary>
+        static void GetZT_OutPutElement()
+        {
+            var uielement = new iAutomationElement();
+            var elementlist = uielement.enumRoot();
+            elementlist = uielement.FindByName("中投证券", elementlist);
+            elementlist = uielement.enumNode(elementlist[0]);
+            if (elementlist.Count > 1)
+            {
+                foreach (AutomationElement item in elementlist)
+                {
+
+                    var list = uielement.enumDescendants(item, "修改成本");
+                    if (list.Count > 0)
+                    {
+                        buyWindowsElement = TreeWalker.RawViewWalker.GetParent(list[0]);
+                        elementlist = uielement.enumNode(buyWindowsElement);
+                        elementlist = uielement.FindByName("输 出", elementlist);
+                        ZT_Output = elementlist[0];
+                        //uielement.WriteTextBox(elementlist[0], "\b\b\b\b\b\b");
+                        //uielement.WriteTextBox(elementlist[0], "000005");
+                    }
+                }
+            }
+        }
+
         /// <summary>
         /// 持仓检测
         /// </summary>
