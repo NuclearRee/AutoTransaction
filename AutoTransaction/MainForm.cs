@@ -225,14 +225,7 @@ namespace AutoTransaction
                 }
                 orderClick.InvokeButton(ZT_SaleConfirm);
                 Clickconfirm();
-                if (_num != positiondata.data[1])
-                {
-                    ZT_DataList[_securitiesCode].data[1] = Convert.ToInt32(positiondata.data[1]) - Convert.ToInt32(_num) + "";
-                }
-                else
-                {
-                    ZT_DataList.Remove(_securitiesCode);
-                }
+                
 
 
             }
@@ -269,6 +262,7 @@ namespace AutoTransaction
             GetCanUseMoney();
             //获取 ZT_BuyPriceUIElement
             //GetBuyPrice();
+           
             //5.获取卖出界面UIElement           
             //点击买入按钮
             click.InvokeButton(ZT_SaleButtonElement);
@@ -623,30 +617,33 @@ namespace AutoTransaction
             button2.Enabled = false;
             Start.Enabled = false;
             isRun = true;
-            bdlist = new BindingList<WarmingData>();
-            DZH_DataList.Clear();
-            var data = new iAutomationElement();
-            DZH_DataList = data.GetViewList(DZH_uiElement, 5);
-            foreach (var i in DZH_DataList)
-            {
-                var item = new WarmingData();
-                item.code = i.Value.data[0];
-                item.condition = i.Value.data[1];
-                item.time = i.Value.data[2];
-                item.price = i.Value.data[3];
-                item.nowprice = i.Value.data[4];
-                item.flag = "";
-                bdlist.Add(item);
-                //var code = IsNum(i.Value.data[0]);
-                //BuyOrder(code);
-            }
-            dataGridView1.DataSource = bdlist;
-            Thread orderThread = new Thread(AutoOrder);
-            orderThread.IsBackground = true;
-            orderThread.Start();
-            Thread updateT = new Thread(updateWarming);
-            updateT.IsBackground = true;
-            updateT.Start();
+            //bdlist = new BindingList<WarmingData>();
+            //DZH_DataList.Clear();
+            //var data = new iAutomationElement();
+            //DZH_DataList = data.GetViewList(DZH_uiElement, 5);
+            //foreach (var i in DZH_DataList)
+            //{
+            //    var item = new WarmingData();
+            //    item.code = i.Value.data[0];
+            //    item.condition = i.Value.data[1];
+            //    item.time = i.Value.data[2];
+            //    item.price = i.Value.data[3];
+            //    item.nowprice = i.Value.data[4];
+            //    item.flag = "";
+            //    bdlist.Add(item);
+            //    //var code = IsNum(i.Value.data[0]);
+            //    //BuyOrder(code);
+            //}
+            //dataGridView1.DataSource = bdlist;
+            //Thread orderThread = new Thread(AutoOrder);
+            //orderThread.IsBackground = true;
+            //orderThread.Start();
+            //Thread updateT = new Thread(updateWarming);
+            //updateT.IsBackground = true;
+            //updateT.Start();
+            Thread UPDate = new Thread(UpdatePostion);
+            UPDate.IsBackground = true;
+            UPDate.Start();
         }
         /// <summary>
         /// 保存配置文件
@@ -822,10 +819,35 @@ namespace AutoTransaction
         }
         
         /// <summary>
+        /// 更新持仓单信息
+        /// </summary>
+        void UpdatePostion()
+        {
+            while (isRun)
+            {
+                var click = new iAutomationElement();
+                click.InvokeButton(ZT_PositionOrder);
+                GetZT_OutPutElement();
+                click.InvokeButton(ZT_Output);
+                GetZT_OutPutSuessElement();
+                click.InvokeButton(ZT_OutputSuess);
+                Thread.Sleep(500);
+                var uielement = new iAutomationElement(); 
+                var elementlist = uielement.enumRoot();
+                elementlist = uielement.FindByClassName("Notepad", elementlist);
+                
+                uielement.CloseTextBook(elementlist[0]);
+
+                Thread.Sleep(20000);
+            }
+        }
+
+        /// <summary>
         /// 持仓检测
         /// </summary>
         void PositionDetection()
         {
+            
             foreach (var item in ZT_DataList)
             {
                 var code = item.Key;
@@ -851,14 +873,7 @@ namespace AutoTransaction
                         
                     }
                     orderClick.InvokeButton(ZT_SaleConfirm);
-                    if (_num != positiondata.data[1])
-                    {
-                        ZT_DataList[code].data[1] = Convert.ToInt32(positiondata.data[1]) - Convert.ToInt32(_num) + "";
-                    }
-                    else
-                    {
-                        ZT_DataList.Remove(code);
-                    }
+                    
                 }
                 
             }

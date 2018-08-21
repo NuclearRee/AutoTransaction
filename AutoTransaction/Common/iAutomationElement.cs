@@ -14,7 +14,7 @@ namespace AutoTransaction.Common
         public const uint LVM_FIRST = 0x1000;
         public const uint LVM_GETITEMCOUNT = LVM_FIRST + 4;
         public const uint LVM_GETITEMW = LVM_FIRST + 75;
-
+        public const uint WM_CLOSE = 0x0010;
         [DllImport("user32.DLL")]
         public static extern int SendMessage(IntPtr hWnd, uint Msg, int wParam, int lParam);
         [DllImport("user32.DLL")]
@@ -316,7 +316,10 @@ namespace AutoTransaction.Common
                 SendMessage((IntPtr)_element.Current.NativeWindowHandle, 0x0102, item, 0);
         }
 
-        
+        public void CloseTextBook(AutomationElement _element)
+        {
+            SendMessage((IntPtr)_element.Current.NativeWindowHandle, WM_CLOSE, 0, 0);
+        }
 
     }
         
