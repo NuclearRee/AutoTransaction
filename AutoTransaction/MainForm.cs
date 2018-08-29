@@ -153,7 +153,8 @@ namespace AutoTransaction
             {
                 return null;
             }
-            data = data.Substring(data.IndexOf("\""));
+            data = data.Substring(data.IndexOf(","));
+            
             data = data.Replace("\"", "");
             data = data.Replace(";", "");
             var datalist = data.Split(',');
@@ -183,14 +184,10 @@ namespace AutoTransaction
             {
                 orderClick.WriteTextBox(ZT_BuyNum, "\b\b\b\b\b\b");
                 orderClick.WriteTextBox(ZT_BuyNum, _num.ToString());
-                Thread.Sleep(500);
+                //orderClick.ButtonClick(ZT_BuyOrder);
                 orderClick.InvokeButton(ZT_BuyOrder);
-                if (ZT_BuyConfirm == null)
-                { 
-                    
-                    GetConfirm("买入确认");
-                  
-                }              
+                
+                GetConfirm("买入确认");
                 orderClick.InvokeButton(ZT_BuyConfirm);
                 Clickconfirm();                
 
@@ -218,11 +215,8 @@ namespace AutoTransaction
                 orderClick.WriteTextBox(ZT_SaleNum, _num);
                 Thread.Sleep(500);
                 orderClick.InvokeButton(ZT_SaleOrder);
-                if (ZT_SaleConfirm == null)
-                {
-                    GetConfirm("卖出确认");
-                   
-                }
+                
+                GetConfirm("卖出确认");
                 orderClick.InvokeButton(ZT_SaleConfirm);
                 Clickconfirm();
                 
@@ -235,7 +229,7 @@ namespace AutoTransaction
         /// <summary>
         /// 基础数据初始化
         /// </summary>
-        static void initialization()
+         void initialization()
         {
             //读取需要的句柄以及UIElement
             //1.读取预警列表UIElement     DZH_uiElement  
@@ -356,14 +350,20 @@ namespace AutoTransaction
         static void Clickconfirm()
         {
             var uielement = new iAutomationElement();
-        var elementlist = uielement.enumRoot();
-        elementlist = uielement.FindByName("中投证券", elementlist);
+            var elementlist = uielement.enumRoot();
+            elementlist = uielement.FindByName("中投证券", elementlist);
             elementlist = uielement.enumNode(elementlist[0]);
             if (elementlist.Count > 1)
             {
                 foreach (AutomationElement item in elementlist)
                 {
+                    
                     var list = uielement.enumDescendants(item, "提示");
+                    while(list.Count <= 0)
+                    {
+                        list = uielement.enumDescendants(item, "提示");
+
+                    }
                     if (list.Count > 0)
                     {
                         buyWindowsElement = TreeWalker.RawViewWalker.GetParent(list[0]);
@@ -375,28 +375,53 @@ namespace AutoTransaction
 
 
                     }
-}
+                }
             }
         }
 
         /// <summary>
         /// 大智慧预警表读取
         /// </summary>
-        static void GetReadWaringListViewElement()
+        void GetReadWaringListViewElement()
         {
             var uielement = new iAutomationElement();
             var elemlentlist = uielement.enumRoot();
             elemlentlist = uielement.FindByName("大智慧", elemlentlist);
-            elemlentlist = uielement.enumNode(elemlentlist[0]);
-            elemlentlist = uielement.FindByName("预警", elemlentlist);
-            //foreach (AutomationElement item in elemlentlist)
-            //{
-            //    Console.WriteLine(item.Current.Name + "" + item.Current.ClassName);
-            //}
-            elemlentlist = uielement.enumNode(elemlentlist[0]);
-            elemlentlist = uielement.FindByName("List2", elemlentlist);
-            DZH_uiElement = elemlentlist[0];
-            DZH_DataList = uielement.GetViewList(elemlentlist[0], 5);
+            if (elemlentlist.Count > 0)
+            {
+                elemlentlist = uielement.enumNode(elemlentlist[0]);
+                elemlentlist = uielement.FindByName("预警", elemlentlist);
+                if(elemlentlist.Count > 0)
+                {
+                    elemlentlist = uielement.enumNode(elemlentlist[0]);
+                    elemlentlist = uielement.FindByName("List2", elemlentlist);
+                    if (elemlentlist.Count > 0)
+                    {
+                        DZH_uiElement = elemlentlist[0];
+                        DZH_DataList = uielement.GetViewList(elemlentlist[0], 5);
+                    }
+                    else
+                    {
+                        output("预警列表加载失败");
+                        return;
+                    }
+                   
+                }
+                else
+                {
+                    output("预警列表未打开");
+                    return;
+                }
+                
+            }        
+            else
+            {
+                output("未找到大智慧句柄");
+                return;
+            }
+                
+                
+           
 
         }
 
@@ -617,33 +642,35 @@ namespace AutoTransaction
             button2.Enabled = false;
             Start.Enabled = false;
             isRun = true;
-            //bdlist = new BindingList<WarmingData>();
-            //DZH_DataList.Clear();
-            //var data = new iAutomationElement();
-            //DZH_DataList = data.GetViewList(DZH_uiElement, 5);
-            //foreach (var i in DZH_DataList)
-            //{
-            //    var item = new WarmingData();
-            //    item.code = i.Value.data[0];
-            //    item.condition = i.Value.data[1];
-            //    item.time = i.Value.data[2];
-            //    item.price = i.Value.data[3];
-            //    item.nowprice = i.Value.data[4];
-            //    item.flag = "";
-            //    bdlist.Add(item);
-            //    //var code = IsNum(i.Value.data[0]);
-            //    //BuyOrder(code);
-            //}
-            //dataGridView1.DataSource = bdlist;
-            //Thread orderThread = new Thread(AutoOrder);
-            //orderThread.IsBackground = true;
-            //orderThread.Start();
-            //Thread updateT = new Thread(updateWarming);
-            //updateT.IsBackground = true;
-            //updateT.Start();
-            Thread UPDate = new Thread(UpdatePostion);
-            UPDate.IsBackground = true;
-            UPDate.Start();
+            bdlist = new BindingList<WarmingData>();
+            DZH_DataList.Clear();
+            var data = new iAutomationElement();
+            DZH_DataList = data.GetViewList(DZH_uiElement, 5);
+            foreach (var i in DZH_DataList)
+            {
+                var item = new WarmingData();
+                item.code = i.Value.data[0];
+                item.condition = i.Value.data[1];
+                item.time = i.Value.data[2];
+                item.price = i.Value.data[3];
+                item.nowprice = i.Value.data[4];
+                item.flag = "";
+                bdlist.Add(item);
+                //var code = IsNum(i.Value.data[0]);
+                //BuyOrder(code);
+            }
+            dataGridView1.DataSource = bdlist;
+            UpdatePostion();
+            //Thread UPDate = new Thread(UpdatePostion);
+            //UPDate.IsBackground = true;
+            //UPDate.Start();
+            Thread orderThread = new Thread(AutoOrder);
+            orderThread.IsBackground = true;
+            orderThread.Start();
+            Thread updateT = new Thread(updateWarming);
+            updateT.IsBackground = true;
+            updateT.Start();
+            
         }
         /// <summary>
         /// 保存配置文件
@@ -823,8 +850,7 @@ namespace AutoTransaction
         /// </summary>
         void UpdatePostion()
         {
-            while (isRun)
-            {
+            
                 var click = new iAutomationElement();
                 click.InvokeButton(ZT_PositionOrder);
                 GetZT_OutPutElement();
@@ -837,9 +863,28 @@ namespace AutoTransaction
                 elementlist = uielement.FindByClassName("Notepad", elementlist);
                 
                 uielement.CloseTextBook(elementlist[0]);
-
-                Thread.Sleep(20000);
-            }
+                var list = ReadText.Read();
+                foreach(var item in list)
+                {
+                    string[] array = item.Split(new char[]
+                   {
+                        '|'
+                   });
+                    var data = new DataItem();
+                    data.data = array;
+                    if (!ZT_DataList.ContainsKey(array[0]))
+                    {
+                        ZT_DataList.Add(array[0], data);
+                    }
+                    else
+                    {
+                        ZT_DataList[array[0]] = data;
+                    }
+                    
+                }
+               
+                
+            
         }
 
         /// <summary>
@@ -847,7 +892,7 @@ namespace AutoTransaction
         /// </summary>
         void PositionDetection()
         {
-            
+            UpdatePostion();
             foreach (var item in ZT_DataList)
             {
                 var code = item.Key;
