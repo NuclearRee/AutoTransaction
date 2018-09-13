@@ -84,6 +84,7 @@
             this.A2.Name = "A2";
             this.A2.Size = new System.Drawing.Size(50, 30);
             this.A2.TabIndex = 1;
+            this.A2.TextChanged += new System.EventHandler(this.A2_TextChanged);
             // 
             // label1
             // 
@@ -230,6 +231,7 @@
             this.A3.Name = "A3";
             this.A3.Size = new System.Drawing.Size(50, 30);
             this.A3.TabIndex = 12;
+            this.A3.TextChanged += new System.EventHandler(this.A3_TextChanged);
             // 
             // AA2
             // 
@@ -239,6 +241,7 @@
             this.AA2.Name = "AA2";
             this.AA2.Size = new System.Drawing.Size(50, 30);
             this.AA2.TabIndex = 11;
+            this.AA2.TextChanged += new System.EventHandler(this.AA2_TextChanged);
             // 
             // B3
             // 
@@ -289,6 +292,7 @@
             this.AA3.Name = "AA3";
             this.AA3.Size = new System.Drawing.Size(50, 30);
             this.AA3.TabIndex = 20;
+            this.AA3.TextChanged += new System.EventHandler(this.AA3_TextChanged);
             // 
             // label11
             // 
@@ -365,6 +369,7 @@
             this.A5.Name = "A5";
             this.A5.Size = new System.Drawing.Size(50, 30);
             this.A5.TabIndex = 28;
+            this.A5.TextChanged += new System.EventHandler(this.A5_TextChanged);
             // 
             // label16
             // 
@@ -396,6 +401,7 @@
             this.AA5.Name = "AA5";
             this.AA5.Size = new System.Drawing.Size(50, 30);
             this.AA5.TabIndex = 39;
+            this.AA5.TextChanged += new System.EventHandler(this.AA5_TextChanged);
             // 
             // label21
             // 

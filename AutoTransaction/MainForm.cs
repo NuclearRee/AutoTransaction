@@ -66,9 +66,12 @@ namespace AutoTransaction
         public static double[] B_param = new double[3];
         //卖出公式参数C
         public static double[] C_param = new double[4];
-        
+        KeyboardHook k_hook;
         public MainForm()
         {
+            k_hook = new KeyboardHook();
+            k_hook.KeyDownEvent += new KeyEventHandler(hook_KeyDown);//钩住键按下
+            k_hook.Start();//安装键盘钩子
             InitializeComponent();
         }
 
@@ -188,8 +191,13 @@ namespace AutoTransaction
                 orderClick.InvokeButton(ZT_BuyOrder);
                 
                 GetConfirm("买入确认");
-                orderClick.InvokeButton(ZT_BuyConfirm);
-                Clickconfirm();                
+                if (ZT_BuyConfirm != null)
+                {
+                    orderClick.InvokeButton(ZT_BuyConfirm);
+                    ZT_BuyConfirm = null;
+                    Clickconfirm();
+                }
+                              
 
             }
             
@@ -204,7 +212,8 @@ namespace AutoTransaction
             var datalist = getSotckData(_securitiesCode);
             var positiondata = ZT_DataList[_securitiesCode];
             var _num = NumCalculation.GetSaleNum(positiondata.data,datalist,A_param,B_param,C_param);
-            if(_num != "0")
+            _num =( Convert.ToInt32( _num) / 100 * 100 ).ToString();
+            if (_num != "0")
             {
                 orderClick.InvokeButton(ZT_SaleButtonElement);
                 Thread.Sleep(500);
@@ -217,10 +226,13 @@ namespace AutoTransaction
                 orderClick.InvokeButton(ZT_SaleOrder);
                 
                 GetConfirm("卖出确认");
-                orderClick.InvokeButton(ZT_SaleConfirm);
-                Clickconfirm();
+                if(ZT_SaleConfirm != null)
+                {
+                    orderClick.InvokeButton(ZT_SaleConfirm);
+                    ZT_SaleConfirm = null;
+                    Clickconfirm();
+                }
                 
-
 
             }
             
@@ -233,7 +245,7 @@ namespace AutoTransaction
         {
             //读取需要的句柄以及UIElement
             //1.读取预警列表UIElement     DZH_uiElement  
-            GetReadWaringListViewElement();
+            //GetReadWaringListViewElement();
             //2.买入按钮UIElement
             GetZT_OrderButtonElement("买入");
             //3.卖出按钮UIElement
@@ -323,27 +335,34 @@ namespace AutoTransaction
         /// <param name="_type">"买入确认" or "卖出确认"</param>
         static void GetConfirm(string _type)
         {
-            var uielement = new iAutomationElement();
-            var elementlist = uielement.enumRoot();
-            elementlist = uielement.FindByName("中投证券", elementlist);
-            elementlist = uielement.enumNode(elementlist[0]);
-            if (elementlist.Count > 1)
+            try
             {
-                foreach (AutomationElement item in elementlist)
+                var uielement = new iAutomationElement();
+                var elementlist = uielement.enumRoot();
+                elementlist = uielement.FindByName("中投证券", elementlist);
+                elementlist = uielement.enumNode(elementlist[0]);
+                if (elementlist.Count > 1)
                 {
-                    var list = uielement.enumDescendants(item, _type);
-                    if (list.Count > 0)
+                    foreach (AutomationElement item in elementlist)
                     {
-                        if (_type == "买入确认")
+                        var list = uielement.enumDescendants(item, _type);
+                        if (list.Count > 0)
                         {
-                            ZT_BuyConfirm = list[0];
-                        }
-                        else if (_type == "卖出确认")
-                        {
-                            ZT_SaleConfirm = list[0];
+                            if (_type == "买入确认")
+                            {
+                                ZT_BuyConfirm = list[0];
+                            }
+                            else if (_type == "卖出确认")
+                            {
+                                ZT_SaleConfirm = list[0];
+                            }
                         }
                     }
                 }
+            }
+            catch
+            {
+                return;
             }
         }
         
@@ -352,26 +371,24 @@ namespace AutoTransaction
             var uielement = new iAutomationElement();
             var elementlist = uielement.enumRoot();
             elementlist = uielement.FindByName("中投证券", elementlist);
+            //uielement.ESCclick(elementlist[0]);
             elementlist = uielement.enumNode(elementlist[0]);
             if (elementlist.Count > 1)
             {
                 foreach (AutomationElement item in elementlist)
                 {
-                    
-                    var list = uielement.enumDescendants(item, "提示");
-                    while(list.Count <= 0)
-                    {
-                        list = uielement.enumDescendants(item, "提示");
 
-                    }
+                    var list = uielement.enumDescendants(item, "提示");
+                    
                     if (list.Count > 0)
                     {
+                        Console.WriteLine("ture");
                         buyWindowsElement = TreeWalker.RawViewWalker.GetParent(list[0]);
-                        elementlist = uielement.enumNode(buyWindowsElement);                        
+                        elementlist = uielement.enumNode(buyWindowsElement);
                         elementlist = uielement.FindByName("确认", elementlist);
                         var orderClick = new iAutomationElement();
                         orderClick.InvokeButton(elementlist[0]);
-
+                        //return;
 
 
                     }
@@ -638,39 +655,41 @@ namespace AutoTransaction
 
         private void Start_Click(object sender, EventArgs e)
         {
+
+            start();
+        }
+
+        void start()
+        {
             button1.Enabled = false;
             button2.Enabled = false;
             Start.Enabled = false;
             isRun = true;
             bdlist = new BindingList<WarmingData>();
             DZH_DataList.Clear();
-            var data = new iAutomationElement();
-            DZH_DataList = data.GetViewList(DZH_uiElement, 5);
-            foreach (var i in DZH_DataList)
-            {
-                var item = new WarmingData();
-                item.code = i.Value.data[0];
-                item.condition = i.Value.data[1];
-                item.time = i.Value.data[2];
-                item.price = i.Value.data[3];
-                item.nowprice = i.Value.data[4];
-                item.flag = "";
-                bdlist.Add(item);
-                //var code = IsNum(i.Value.data[0]);
-                //BuyOrder(code);
-            }
-            dataGridView1.DataSource = bdlist;
+            //var data = new iAutomationElement();
+            //DZH_DataList = data.GetViewList(DZH_uiElement, 5);
+            //foreach (var i in DZH_DataList)
+            //{
+            //    var item = new WarmingData();
+            //    item.code = i.Value.data[0];
+            //    item.condition = i.Value.data[1];
+            //    item.time = i.Value.data[2];
+            //    item.price = i.Value.data[3];
+            //    item.nowprice = i.Value.data[4];
+            //    item.flag = "";
+            //    bdlist.Add(item);
+
+            //}
+            //dataGridView1.DataSource = bdlist;
             UpdatePostion();
-            //Thread UPDate = new Thread(UpdatePostion);
-            //UPDate.IsBackground = true;
-            //UPDate.Start();
+
             Thread orderThread = new Thread(AutoOrder);
             orderThread.IsBackground = true;
             orderThread.Start();
-            Thread updateT = new Thread(updateWarming);
-            updateT.IsBackground = true;
-            updateT.Start();
-            
+            //Thread updateT = new Thread(updateWarming);
+            //updateT.IsBackground = true;
+            //updateT.Start();
         }
         /// <summary>
         /// 保存配置文件
@@ -697,7 +716,7 @@ namespace AutoTransaction
             while (isRun)
             {
                  PositionDetection();
-                 if (count < bdlist.Count)
+                 if (count < bdlist.Count && warmingRun)
                  {
                     var data = new WarmingData();
                     data.code = bdlist[count].code;
@@ -852,36 +871,62 @@ namespace AutoTransaction
         {
             
                 var click = new iAutomationElement();
-                click.InvokeButton(ZT_PositionOrder);
-                GetZT_OutPutElement();
-                click.InvokeButton(ZT_Output);
-                GetZT_OutPutSuessElement();
-                click.InvokeButton(ZT_OutputSuess);
-                Thread.Sleep(500);
-                var uielement = new iAutomationElement(); 
-                var elementlist = uielement.enumRoot();
-                elementlist = uielement.FindByClassName("Notepad", elementlist);
-                
-                uielement.CloseTextBook(elementlist[0]);
-                var list = ReadText.Read();
-                foreach(var item in list)
+                if (ZT_PositionOrder != null)
                 {
-                    string[] array = item.Split(new char[]
-                   {
-                        '|'
-                   });
-                    var data = new DataItem();
-                    data.data = array;
-                    if (!ZT_DataList.ContainsKey(array[0]))
+                    click.InvokeButton(ZT_PositionOrder);
+                    GetZT_OutPutElement();
+                    if (ZT_Output != null)
                     {
-                        ZT_DataList.Add(array[0], data);
+                        click.InvokeButton(ZT_Output);
+                        GetZT_OutPutSuessElement();
+                        if (ZT_OutputSuess!=null)
+                        {
+                        click.InvokeButton(ZT_OutputSuess);
+                        Thread.Sleep(500);
+                        var uielement = new iAutomationElement();
+                        var elementlist = uielement.enumRoot();
+                        elementlist = uielement.FindByClassName("Notepad", elementlist);
+
+                        uielement.CloseTextBook(elementlist[0]);
+                        var list = ReadText.Read();
+                        foreach (var item in list)
+                        {
+                            string[] array = item.Split(new char[]
+                           {
+                            '|'
+                           });
+                            var data = new DataItem();
+                            data.data = array;
+                            if (!ZT_DataList.ContainsKey(array[0]))
+                            {
+                                ZT_DataList.Add(array[0], data);
+                            }
+                            else
+                            {
+                                //若标记为空更新全部数据
+                                if (ZT_DataList[array[0]].data[18] == "")
+                                {
+                                    ZT_DataList[array[0]] = data;
+                                }                       
+                                else
+                                {
+                                    data.data[18] = "1";
+                                    ZT_DataList[array[0]] = data;
+                                }
+
+                              
+                            }
+                                    
+                                
+                            
+                        }
+                       
+
+                        }
                     }
-                    else
-                    {
-                        ZT_DataList[array[0]] = data;
-                    }
-                    
+               
                 }
+               
                
                 
             
@@ -892,36 +937,50 @@ namespace AutoTransaction
         /// </summary>
         void PositionDetection()
         {
-            UpdatePostion();
-            foreach (var item in ZT_DataList)
+            if (postionRun && isRun)
             {
-                var code = item.Key;
-                var orderClick = new iAutomationElement();
-                var datalist = getSotckData(code);
-                var positiondata = ZT_DataList[code];
-                var _num = NumCalculation.GetSaleNum(positiondata.data, datalist, A_param, B_param, C_param);
-                if(_num != "0")
+                UpdatePostion();
+                foreach (var item in ZT_DataList)
                 {
-                    
-                    orderClick.InvokeButton(ZT_SaleButtonElement);
-                    Thread.Sleep(500);
-                    orderClick.WriteTextBox(ZT_SaleSecuritiesCode, "\b\b\b\b\b\b");
-                    orderClick.WriteTextBox(ZT_SaleSecuritiesCode, code);
-                    Thread.Sleep(500);
-                    orderClick.WriteTextBox(ZT_SaleNum, "\b\b\b\b\b\b");
-                    orderClick.WriteTextBox(ZT_SaleNum, _num);
-                    Thread.Sleep(500);
-                    orderClick.InvokeButton(ZT_SaleOrder);
-                    if (ZT_SaleConfirm == null)
+
+                    if(postionRun && isRun && item.Value.data[18]=="")
                     {
-                        GetConfirm("卖出确认");
+
+                        var code = item.Key;                     
                         
+                        var orderClick = new iAutomationElement();
+                        var datalist = getSotckData(code);
+                        var positiondata = ZT_DataList[code];
+                        var _num = NumCalculation.GetSaleNum(positiondata.data, datalist, A_param, B_param, C_param);
+                        _num = (Convert.ToInt32(_num) / 100 * 100).ToString();
+                        if (_num != "0")
+                        {
+                            //数量不为0 数据标记 下次持仓检测不做
+                            ZT_DataList[code].data[18] = "1";
+                            orderClick.InvokeButton(ZT_SaleButtonElement);
+                            Thread.Sleep(500);
+                            orderClick.WriteTextBox(ZT_SaleSecuritiesCode, "\b\b\b\b\b\b");
+                            orderClick.WriteTextBox(ZT_SaleSecuritiesCode, code);
+                            Thread.Sleep(500);
+                            orderClick.WriteTextBox(ZT_SaleNum, "\b\b\b\b\b\b");
+                            orderClick.WriteTextBox(ZT_SaleNum, _num);
+                            Thread.Sleep(500);
+                            orderClick.InvokeButton(ZT_SaleOrder);
+                            GetConfirm("卖出确认");
+                            if (ZT_SaleConfirm != null)
+                            {
+                                orderClick.InvokeButton(ZT_SaleConfirm);
+                                ZT_SaleConfirm = null;
+                                Clickconfirm();
+                            }
+
+                        }
                     }
-                    orderClick.InvokeButton(ZT_SaleConfirm);
                     
+
                 }
-                
             }
+           
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -930,6 +989,128 @@ namespace AutoTransaction
             button2.Enabled = true;
             Start.Enabled = true;
             isRun = false;
+        }
+
+        bool postionRun = false;
+
+        bool warmingRun = false;
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            if (!postionRun)
+            {
+                postionRun = true;
+                button4.Text = "结束持仓检测";
+
+            }
+            else
+            {
+                postionRun = false;
+                button4.Text = "持仓检测";
+            }
+            
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            if (!warmingRun)
+            {
+                warmingRun = true;
+                button5.Text = "结束预警检测";
+
+            }
+            else
+            {
+                warmingRun = false;
+                button5.Text = "预警检测";
+            }
+        }
+
+        private void hook_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == Keys.F8 && postionRun == true)
+            {
+                postionRun = false;
+                button4.Text = "持仓检测";
+            }
+            else if (e.KeyData == Keys.F8 && postionRun == false)
+            {
+                postionRun = true;
+                button4.Text = "结束持仓检测";
+            }
+            if (e.KeyData == Keys.F9 && warmingRun == true)
+            {
+                warmingRun = false;
+                button5.Text = "预警检测";
+            }
+            else if (e.KeyData == Keys.F9 && warmingRun == false)
+            {
+                warmingRun = true;
+                button5.Text = "结束预警检测";
+            }
+            if (e.KeyData == Keys.F7 && isRun == true)
+            {
+                button1.Enabled = true;
+                button2.Enabled = true;
+                Start.Enabled = true;
+                isRun = false;
+
+            }
+            else if (e.KeyData == Keys.F7 && isRun == false)
+            {
+
+                button1.Enabled = false;
+                button2.Enabled = false;
+                Start.Enabled = false;
+                isRun = true;
+                start();
+            }
+        }
+
+        private void MainForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == Keys.F8 && postionRun == true)
+            {
+                postionRun = false;
+                button4.Text = "持仓检测";
+            }
+            else if (e.KeyData == Keys.F8 && postionRun == false)
+            {
+                postionRun = true;
+                button4.Text = "结束持仓检测";
+            }
+            if (e.KeyData == Keys.F9&& warmingRun == true)
+            {
+                warmingRun = false;
+                button5.Text = "预警检测";
+            }
+            else if (e.KeyData == Keys.F9 && warmingRun == false)
+            {
+                warmingRun = true;
+                button5.Text = "结束预警检测";
+            }
+            if (e.KeyData == Keys.F7 && isRun == true)
+            {
+                button1.Enabled = true;
+                button2.Enabled = true;
+                Start.Enabled = true;
+                isRun = false;
+
+            }
+            else if(e.KeyData == Keys.F7 && isRun == false)
+            {
+               
+                button1.Enabled = false;
+                button2.Enabled = false;
+                Start.Enabled = false;
+                isRun = true;
+                start();
+            }
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            k_hook.Stop();
         }
     }
 }

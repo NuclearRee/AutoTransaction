@@ -37,6 +37,8 @@
             this.CurrentPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.groupbox2 = new System.Windows.Forms.GroupBox();
+            this.button5 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.button3 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
@@ -51,9 +53,9 @@
             // 
             this.groupBox1.Controls.Add(this.dataGridView1);
             this.groupBox1.Font = new System.Drawing.Font("宋体", 9F);
-            this.groupBox1.Location = new System.Drawing.Point(5, 289);
+            this.groupBox1.Location = new System.Drawing.Point(5, 344);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(750, 281);
+            this.groupBox1.Size = new System.Drawing.Size(750, 226);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "预警列表";
@@ -77,7 +79,7 @@
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowTemplate.Height = 27;
-            this.dataGridView1.Size = new System.Drawing.Size(744, 257);
+            this.dataGridView1.Size = new System.Drawing.Size(744, 202);
             this.dataGridView1.TabIndex = 0;
             // 
             // Code
@@ -127,6 +129,8 @@
             // 
             // groupbox2
             // 
+            this.groupbox2.Controls.Add(this.button5);
+            this.groupbox2.Controls.Add(this.button4);
             this.groupbox2.Controls.Add(this.textBox1);
             this.groupbox2.Controls.Add(this.button3);
             this.groupbox2.Controls.Add(this.button2);
@@ -134,10 +138,30 @@
             this.groupbox2.Controls.Add(this.Start);
             this.groupbox2.Location = new System.Drawing.Point(5, 6);
             this.groupbox2.Name = "groupbox2";
-            this.groupbox2.Size = new System.Drawing.Size(750, 277);
+            this.groupbox2.Size = new System.Drawing.Size(750, 332);
             this.groupbox2.TabIndex = 1;
             this.groupbox2.TabStop = false;
             this.groupbox2.Text = "运行及参数配置";
+            // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(555, 178);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(180, 45);
+            this.button5.TabIndex = 7;
+            this.button5.Text = "预警检测";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(555, 127);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(180, 45);
+            this.button4.TabIndex = 6;
+            this.button4.Text = "持仓检测";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // textBox1
             // 
@@ -145,12 +169,12 @@
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(542, 238);
+            this.textBox1.Size = new System.Drawing.Size(542, 301);
             this.textBox1.TabIndex = 5;
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(555, 217);
+            this.button3.Location = new System.Drawing.Point(555, 280);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(180, 45);
             this.button3.TabIndex = 4;
@@ -170,7 +194,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(555, 90);
+            this.button1.Location = new System.Drawing.Point(555, 76);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(180, 45);
             this.button1.TabIndex = 2;
@@ -180,7 +204,7 @@
             // 
             // Start
             // 
-            this.Start.Location = new System.Drawing.Point(555, 155);
+            this.Start.Location = new System.Drawing.Point(555, 229);
             this.Start.Name = "Start";
             this.Start.Size = new System.Drawing.Size(180, 45);
             this.Start.TabIndex = 3;
@@ -197,8 +221,11 @@
             this.Controls.Add(this.groupBox1);
             this.Font = new System.Drawing.Font("宋体", 9F);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.KeyPreview = true;
             this.Name = "MainForm";
             this.Text = "自动下单";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyDown);
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.groupbox2.ResumeLayout(false);
@@ -223,6 +250,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Time;
         private System.Windows.Forms.DataGridViewTextBoxColumn Price;
         private System.Windows.Forms.DataGridViewTextBoxColumn CurrentPrice;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button button5;
     }
 }
 

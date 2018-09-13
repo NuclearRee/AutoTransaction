@@ -327,6 +327,10 @@ namespace AutoTransaction.Common
             SendMessage((IntPtr)_element.Current.NativeWindowHandle, BM_CLICK, 0, 0);
         }
 
+        public void ESCclick(AutomationElement _element)
+        {
+            SendMessage((IntPtr)_element.Current.NativeWindowHandle, 0x100, 0x1B, 0);
+        }
     }
         
        

@@ -58,5 +58,35 @@ namespace AutoTransaction
         {
             this.Close();
         }
+
+        private void A5_TextChanged(object sender, EventArgs e)
+        {
+            AA5.Text = A5.Text;
+        }
+
+        private void A3_TextChanged(object sender, EventArgs e)
+        {
+            AA3.Text = A3.Text;
+        }
+
+        private void AA2_TextChanged(object sender, EventArgs e)
+        {
+            A2.Text = AA2.Text;
+        }
+
+        private void A2_TextChanged(object sender, EventArgs e)
+        {
+            AA2.Text = A2.Text;
+        }
+
+        private void AA3_TextChanged(object sender, EventArgs e)
+        {
+            A3.Text = AA3.Text;
+        }
+
+        private void AA5_TextChanged(object sender, EventArgs e)
+        {
+            A5.Text = AA5.Text;
+        }
     }
 }

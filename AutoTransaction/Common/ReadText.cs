@@ -22,7 +22,7 @@ namespace AutoTransaction.Common
                 if (i > 4)
                 {
                     var str = new System.Text.RegularExpressions.Regex("[\\s]+").Replace(line.ToString(), "|");
-                    str = str.Substring(0, str.Length - 1);
+                    str = str.Substring(0, str.Length);
                     strlist.Add(str);
 
                 }
